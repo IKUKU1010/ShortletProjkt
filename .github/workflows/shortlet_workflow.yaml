@@ -85,7 +85,7 @@ jobs:
             --set crds.enabled=true
 
       - name: Delay
-        run: sleep 20s
+        run: sleep 25s
 
       - name: Deploy Nginx Ingress Controller
         run: |
