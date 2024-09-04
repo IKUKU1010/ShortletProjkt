@@ -15,7 +15,7 @@ data "aws_ami" "latest-ubuntu-jammy-22-04-image" {
 resource "aws_launch_template" "eks" {
   name_prefix   = "eks-"
   image_id      = data.aws_ami.latest-ubuntu-jammy-22-04-image.id
-  instance_type = "t3.medium"
+  instance_type = "t2.micro"
 
   tag_specifications {
     resource_type = "instance"
@@ -117,10 +117,10 @@ module "eks" {
         id      = aws_launch_template.eks.id
         version = "$Latest"
       }
-      instance_types = ["t3.medium"]
+      instance_types = ["t2.micro"]
       min_size       = 1
-      max_size       = 2
-      desired_size   = 1
+      max_size       = 3
+      desired_size   = 3
       key_name       = "Nkem-key" 
       tags = {
         "Name"        = "shortletapp-node1"
@@ -134,10 +134,10 @@ module "eks" {
         id      = aws_launch_template.eks.id
         version = "$Latest"
       }
-      instance_types = ["t3.medium"]
+      instance_types = ["t2.micro"]
       min_size       = 1
-      max_size       = 2
-      desired_size   = 1
+      max_size       = 3
+      desired_size   = 3
       key_name       = "Nkem-key" 
       tags = {
         "Name"        = "shortletapp-node2"
