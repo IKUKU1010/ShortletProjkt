@@ -73,7 +73,7 @@ jobs:
           aws eks update-kubeconfig --name shortlet-CICD001 --region ${{ vars.REGION }}
 
       - name: Deploy application
-        run: helm upgrade --install capstoneapp helm/app --namespace shortlet
+        run: helm upgrade --install shortletapp helm/app --namespace shortlet
 
       - name: Deploy Let's Encrypt
         run: |
