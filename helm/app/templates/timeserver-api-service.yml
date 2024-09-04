@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: timeserver-api-svc
+  annotations:
+    prometheus.io/scrape: 'true'
+  labels:
+    name: timeserver-api
+  namespace: shortlet
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 8000
+  selector:
+    name: timeserver-api
