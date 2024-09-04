@@ -84,6 +84,9 @@ jobs:
             --version v1.15.2 \
             --set crds.enabled=true
 
+      - name: Delay
+        run: sleep 20s
+
       - name: Deploy Nginx Ingress Controller
         run: |
           helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx/
@@ -91,7 +94,7 @@ jobs:
           helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx --namespace shortlet
 
       - name: Delay
-        run: sleep 40s
+        run: sleep 30s
 
       - name: Change Back to Project Root
         run: cd ..
