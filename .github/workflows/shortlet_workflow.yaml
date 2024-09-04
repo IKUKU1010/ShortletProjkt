@@ -7,6 +7,9 @@ on:
     branches: ["main"]
   workflow_dispatch:
 
+env:
+  REGION: us-east-1
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -18,7 +21,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+          aws-region: ${{ env.REGION }}
 
       - name: Install kubectl
         uses: azure/setup-kubectl@v3 
@@ -35,7 +38,7 @@ jobs:
             echo "Bucket already exists, skipping creation."
           else
             echo "Bucket does not exist, creating it."
-            aws s3 mb s3://"shortlet-bucket"
+            aws s3 mb s3://shortlet-bucket
           fi
 
       - name: Create DynamoDB table
@@ -55,22 +58,15 @@ jobs:
           terraform -chdir=terraform/ init
           terraform -chdir=terraform/ apply --auto-approve
 
-      - name: Change Back to Project Root
-        run: cd ..
-      
       - name: Update kubeconfig
         run: |
-          aws eks update-kubeconfig --name shortlet-CICD001 --region ${{ vars.REGION }}
+          aws eks update-kubeconfig --name shortlet-CICD001 --region ${{ env.REGION }}
 
       - name: Apply aws-auth ConfigMap
         run: kubectl apply -f aws-auth.yaml --validate=false
       
       - name: Create namespace shortlet
         run: kubectl get namespace shortlet || kubectl create namespace shortlet
-
-      - name: Update kubeconfig
-        run: |
-          aws eks update-kubeconfig --name shortlet-CICD001 --region ${{ vars.REGION }}
 
       - name: Deploy application
         run: helm upgrade --install shortletapp helm/app --namespace shortlet
@@ -93,9 +89,6 @@ jobs:
       - name: Delay
         run: sleep 40s
 
-      - name: Change Back to Project Root
-        run: cd ..
-
       - name: Deploy Ingress Resources
         run: kubectl apply -f ingress.yml
 
@@ -104,6 +97,3 @@ jobs:
 
       - name: Apply Certificate
         run: kubectl apply -f certificate.yaml
-        
-
-
