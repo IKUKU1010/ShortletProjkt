@@ -89,12 +89,10 @@ jobs:
 
       - name: Deploy Nginx Ingress Controller
         run: |
-          helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx/
-          helm repo update
-          helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx --namespace shortlet
+          helm upgrade --install ingress-nginx oci://ghcr.io/nginxinc/charts/nginx-ingress --version 1.3.2 --namespace shortlet
 
       - name: Delay
-        run: sleep 30s
+        run: sleep 200s
 
       - name: Change Back to Project Root
         run: cd ..
