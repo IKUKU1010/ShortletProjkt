@@ -104,6 +104,6 @@ jobs:
         run: kubectl apply -f cluster-issuer.yml
 
       - name: Apply Certificate
-        run: kubectl apply -f certificate.yaml
+        run: kubectl apply -f certificate.yml
                
 
