@@ -15,7 +15,7 @@ data "aws_ami" "latest-ubuntu-jammy-22-04-image" {
 resource "aws_launch_template" "eks" {
   name_prefix   = "eks-"
   image_id      = data.aws_ami.latest-ubuntu-jammy-22-04-image.id
-  instance_type = "t2.micro"
+  instance_type = "t3.medium"
 
   tag_specifications {
     resource_type = "instance"
@@ -103,7 +103,7 @@ module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 20.0"
 
-  cluster_name    = "shortlet-CICD001"
+  cluster_name    = "shortlet-CICD002"
   cluster_version = "1.30"
   vpc_id          = module.vpc.vpc_id
   subnet_ids      = module.vpc.private_subnets
@@ -117,11 +117,11 @@ module "eks" {
         id      = aws_launch_template.eks.id
         version = "$Latest"
       }
-      instance_types = ["t2.micro"]
+      instance_types = ["t3.medium"]
       min_size       = 1
       max_size       = 2
       desired_size   = 2
-      key_name       = "Nkem-key" # Add your SSH key name here for access
+      key_name       = "Nkem-key" 
       tags = {
         "Name"        = "shortletapp-node1"
         "Environment" = "Development"
@@ -134,11 +134,11 @@ module "eks" {
         id      = aws_launch_template.eks.id
         version = "$Latest"
       }
-      instance_types = ["t2.micro"]
+      instance_types = ["t3.medium"]
       min_size       = 1
       max_size       = 2
       desired_size   = 2
-      key_name       = "Nkem-key" # Add your SSH key name here for access
+      key_name       = "Nkem-key" 
       tags = {
         "Name"        = "shortletapp-node2"
         "Environment" = "Development"
