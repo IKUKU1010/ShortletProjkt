@@ -136,8 +136,8 @@ module "eks" {
       }
       instance_types = ["t2.micro"]
       min_size       = 1
-      max_size       = 3
-      desired_size   = 3
+      max_size       = 2
+      desired_size   = 2
       key_name       = "Nkem-key" 
       tags = {
         "Name"        = "shortletapp-node2"
