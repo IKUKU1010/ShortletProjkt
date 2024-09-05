@@ -196,7 +196,7 @@ These secrets allow GitHub Actions to securely interact with your AWS account an
 
 <br>
 
-![github secrets 2](./Images/github%20secrets%202.png)
+![github secrets 2](./images/github%20secrets%202.png)
 
 
 ## Step 3: Trigger the Pipeline
