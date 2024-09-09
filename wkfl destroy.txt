@@ -36,4 +36,6 @@ jobs:
       - name: Delete DynamoDB Table
         run: |
           aws dynamodb delete-table --table-name shortlet-lock
+
+          
  

@@ -28,7 +28,6 @@ jobs:
           terraform -chdir=terraform/ init
           terraform -chdir=terraform/ destroy --auto-approve
 
-
       - name: Delete S3 Bucket
         run: |
           aws s3 rb s3://shortlet-bucket --force
@@ -36,4 +35,5 @@ jobs:
       - name: Delete DynamoDB Table
         run: |
           aws dynamodb delete-table --table-name shortlet-lock
+
  
